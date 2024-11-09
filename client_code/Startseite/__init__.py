@@ -28,7 +28,7 @@ class Startseite(StartseiteTemplate):
       print(self.rooms)
       if i[4] == selected_value:
         print(i[4])
-        matching_rooms.append(f"Zimmernummer:{i[0]}  -  Bettenanzahl: {i[1]}  -  Preis p. Nacht = {i[2]}  -  Gebucht: {i[4]}")
+        matching_rooms.append(f"Zimmernummer:{i[0]}  -  Bettenanzahl: {i[1]}  -  Preis p. Nacht = {i[2]}  -  Gebucht: {i[3]}")
     self.dropdownzimmer.items = matching_rooms
     
     print("Selected Index:", selected_value)
