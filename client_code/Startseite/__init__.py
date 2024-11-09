@@ -2,6 +2,7 @@ from ._anvil_designer import StartseiteTemplate
 from anvil import *
 import anvil.server
 from anvil.tables import app_tables
+import datetime
 
 
 class Startseite(StartseiteTemplate):
@@ -14,7 +15,15 @@ class Startseite(StartseiteTemplate):
             (zimmernummer, bettenanzahl, preis_pro_nacht, gebucht, JID, ZID)
             for zimmernummer, bettenanzahl, preis_pro_nacht, gebucht, JID, ZID in anvil.server.call("get_rooms")
         ]
-        
+        today = datetime.date.today()
+        self.date_picker_start.date = today
+        self.date_picker_start.min_date = today 
+
+        self.date_picker_end.date = None
+        self.date_picker_end.min_date = today + datetime.timedelta(days=1)
+
+
+      
         # Fetch and store pricing categories
         self.preiskat = [(PID, name, price) for PID, name, price in anvil.server.call("get_preiskat")]
         
@@ -30,7 +39,7 @@ class Startseite(StartseiteTemplate):
         
         # Populate drop_down_2 with user list
         self.get_users()
-    
+      
     def get_users(self):
         """Populate drop_down_2 with user data"""
         users_list = []
@@ -76,3 +85,79 @@ class Startseite(StartseiteTemplate):
                   
         # Set dropdownzimmer items after collecting all matches
         self.dropdownzimmer.items = matching_rooms
+
+    def button_1_click(self, **event_args):
+      """This method is called when the button is clicked"""
+      nutzerid = ""
+      zimmerid = ""
+      self.selected_jugendherberge = self.drop_down_1.selected_value
+      selected_value_user = self.drop_down_2.selected_value
+      selected_value_zimmer = self.dropdownzimmer.selected_value
+      
+      # Find `nutzerid` based on the selection in `self.user`
+      for i in self.user:
+          if selected_value_user == f"Gast {i[0]} - Preiskategorie: {i[1]}":
+              nutzerid = str(i[0])  # Convert to string if necessary
+  
+      # Find `zimmerid` based on the selection in `self.rooms`
+      for y in self.rooms:
+          if selected_value_zimmer == f"Zimmernummer: {y[0]} - Bettenanzahl: {y[1]} - Preis p. Nacht = {y[2]} - Gebucht: {y[3]}":
+              zimmerid = str(y[0])  # Convert to string if necessary
+  
+      selected_datestart = self.date_picker_start.date
+      selected_dateend = self.date_picker_end.date
+      
+      print("Selected Start Date:", selected_datestart)
+      print("Selected End Date:", selected_dateend)         
+      print("Nutzerid:", nutzerid)
+      print("Zimmerid:", zimmerid)
+      
+      daten_liste = [nutzerid, zimmerid, selected_datestart, selected_dateend]
+      
+      # Save data to the server
+      try:
+          anvil.server.call('write_booking', daten_liste)
+          alert("Daten erfolgreich in die Tabelle eingefügt!")
+      except Exception as e:
+          alert(f"Fehler beim Einfügen der Daten: {e}")
+  
+      # Fetch and update bookings list
+      self.bookings = [
+          (BID, GID, ZID, startdatum, enddatum)
+          for BID, GID, ZID, startdatum, enddatum in anvil.server.call("get_booking")
+      ]
+      
+      self.drop_down_3.items = [
+          f"BuchungsID: {reservation[0]} - GästeID: {reservation[1]} - ZimmerID: {reservation[2]} - Anreise: {reservation[3]} - Abreise: {reservation[4]}"
+          for reservation in self.bookings
+      ]
+      
+              
+              
+            
+            
+            
+            
+            
+
+          
+          
+          
+          
+      
+      
+
+    def date_picker_start_change(self, **event_args):
+      """This method is called when the selected date changes"""
+     
+      self.date_picker_end.min_date = self.date_picker_start.date + datetime.timedelta(days=1)
+
+    def date_picker_end_change(self, **event_args):
+      """This method is called when the selected date changes"""
+      if self.date_picker_end.date <= self.date_picker_start.date:
+        self.date_picker_end.date = self.date_picker_start.date + datetime.timedelta(days=1)
+
+      
+
+    
+      

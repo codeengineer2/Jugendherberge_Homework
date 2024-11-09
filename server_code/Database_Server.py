@@ -50,7 +50,32 @@ def get_preiskat(rows="x"):
   print(res)
   return res
   
+@anvil.server.callable
+def write_booking(daten_liste):
+    conn = sqlite3.connect(data_files['jugendherbergen_verwaltung.db'])
+    cursor = conn.cursor()
+    
+    GID = daten_liste[0]
+    ZID = daten_liste[1]
+    startdatum = daten_liste[2]
+    enddatum = daten_liste[3]
+    
+    try:
+        cursor.execute("INSERT INTO bucht (GID, ZID, startdatum, enddatum) VALUES (?, ?, ?, ?)", (GID, ZID, startdatum, enddatum))
+        conn.commit()
+        print("Insertion successful")
+    except Exception as e:
+        print("Error during insertion:", e)
+    finally:
+        conn.close()
+
+@anvil.server.callable
+def get_booking(row="x"):
+    conn = sqlite3.connect(data_files['jugendherbergen_verwaltung.db'])
+    cursor = conn.cursor()
+    res = list(cursor.execute("SELECT BID, GID, ZID, startdatum, enddatum FROM bucht"))
+    conn.close()
+    print("Booking data retrieved:", res)
+    return res
   
-
-
-
+  
