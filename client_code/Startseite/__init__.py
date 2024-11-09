@@ -12,14 +12,22 @@ class Startseite(StartseiteTemplate):
     (zimmernummer, bettenanzahl, preis_pro_nacht, gebucht, JID, ZID)
     for zimmernummer, bettenanzahl, preis_pro_nacht, gebucht, JID, ZID in anvil.server.call("get_rooms")
     ]
+    
     # Any code you write here will run before the form opens.
     self.drop_down_1.items = [("Feldkirch", 0), ("Hohenems", 1)]
     print(anvil.server.call("say_hello", "42"))
     self.drop_down_1.items = anvil.server.call("get_jugendherbergen", "name, JID")
 # If needed, transform the items for display or store multiple values in a way that's compatible
+    self.user = [(GID, PID) for GID, PID in anvil.server.call("get_user")]
+    self.get_users()
+  def get_users(self):
+    users_list = []
+    for x in self.user:
+      print(self.user)
+      users_list.append(f"Gast {x[0]}  -  Preiskategorie: {x[1]}")
+    self.drop_down_2.items = users_list
 
-# Fügt die Daten zur Data Table hinzu
-   
+  
   def drop_down_1_change(self, **event_args):
     """This method is called when an item is selected"""
     matching_rooms = []
@@ -35,3 +43,11 @@ class Startseite(StartseiteTemplate):
     pass
     
 
+
+#def users(self):
+ #   users_list = []
+  #  for x in self.user:
+   #   print(self.user)
+    #  users_list.append(f"Gast {x[0]}  -  Preiskategorie: {x[1]}")
+    #self.drop_down_2.items = users_list
+#self.user = [(GID, PID) for GID, PID in anvil.server.call("get_user")]

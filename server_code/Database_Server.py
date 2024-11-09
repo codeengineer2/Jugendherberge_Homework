@@ -34,6 +34,15 @@ def get_rooms(rows="x"):
   print(res)
   return res
   
+@anvil.server.callable
+def get_user(rows="x"):
+  conn = sqlite3.connect(data_files['jugendherbergen_verwaltung.db'])
+  cursor = conn.cursor()
+  res = list(cursor.execute("SELECT GID,PID FROM gast"))
+  print(res)
+  return res
+  
+  
   
 
 
