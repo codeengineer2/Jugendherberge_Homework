@@ -17,6 +17,10 @@ components:
     name: drop_down_2
     properties: {}
     type: DropDown
+  - layout_properties: {grid_position: 'SVOMAJ,FKTVEB'}
+    name: dropdownzimmer
+    properties: {}
+    type: DropDown
   layout_properties: {slot: default}
   name: content_panel
   properties: {col_widths: '{"ZKFOQM":5,"FBSHDK":55,"YIMHOD":10,"YHNMCZ":50}'}
