@@ -13,6 +13,8 @@ import sqlite3
 # them with @anvil.server.callable.
 # Here is an example - you can replace it with your own:
 #
+counterguestadd = 0
+
 @anvil.server.callable
 def say_hello(name):
   print("Hello, " + name + "!")
@@ -78,7 +80,36 @@ def get_booking(row="x"):
     conn.close()
     print("Booking data retrieved:", res)
     return res
+  
 
+@anvil.server.callable
+def write_bookingothers(guestlistdatas):
+    global counterguestadd  # Declare counterguestadd as global to modify it within the function
+    conn = sqlite3.connect(data_files['jugendherbergen_verwaltung.db'])
+    cursor = conn.cursor()
+    
+    try:
+        counterguestadd += 1  # Increment the global counterguestadd variable
+        for i in guestlistdatas:
+          cursor.execute("INSERT INTO buchmit (BID, GID) VALUES (?, ?)", (counterguestadd, i))
+        
+        conn.commit()
+        print("Insertion successful")
+    except Exception as e:
+        print("Error during insertion:", e)
+    finally:
+        conn.close()
 
+@anvil.server.callable
+def get_bookingwithguest(row="x"):
+  conn = sqlite3.connect(data_files['jugendherbergen_verwaltung.db'])
+  cursor = conn.cursor()
+  res = list(cursor.execute("SELECT BMID, BID, GID FROM buchmit"))
+  conn.close()
+  print("Booking data retrieved:", res)
+  return res
+  
+  
+  
   
   

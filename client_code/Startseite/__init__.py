@@ -10,7 +10,9 @@ class Startseite(StartseiteTemplate):
       
         self.init_components(**properties)
         
-        
+        self.selectedguestlist = []
+        self.counterguests = 0
+        self.bettenzahl = 0
         self.rooms = [
             (zimmernummer, bettenanzahl, preis_pro_nacht, gebucht, JID, ZID)
             for zimmernummer, bettenanzahl, preis_pro_nacht, gebucht, JID, ZID in anvil.server.call("get_rooms")
@@ -43,12 +45,13 @@ class Startseite(StartseiteTemplate):
     def get_users(self):
         """Populate drop_down_2 with user data"""
         users_list = []
-        
+        user_listadd = []
         for x in self.user:
        
             users_list.append(f"Gast {x[0]} - Preiskategorie: {x[1]}")
-        
-   
+            user_listadd.append(f"{x[0]}")
+          
+        self.drop_down_gastliste.items = user_listadd
         self.drop_down_2.items = users_list
     def drop_down_1_change(self, **event_args):
         """This method is called when an item is selected in drop_down_1"""
@@ -112,25 +115,40 @@ class Startseite(StartseiteTemplate):
       
       daten_liste = [nutzerid, zimmerid, selected_datestart, selected_dateend]
       
-      # Save data to the server
       try:
           anvil.server.call('write_booking', daten_liste)
           alert("Daten erfolgreich in die Tabelle eingefügt!")
       except Exception as e:
           alert(f"Fehler beim Einfügen der Daten: {e}")
-  
-      # Fetch and update bookings list
+
+      
+      for guest_id in self.selectedguestlist:  
+        guestlistdatas = [guest_id]
+        try:
+            anvil.server.call('write_bookingothers', guestlistdatas)
+            print(f"Guest {guest_id} erfolgreich in die Tabelle eingefügt!")
+        except Exception as e:
+            print(f"Fehler beim Einfügen von Gast {guest_id}: {e}")
+     
       self.bookings = [
           (BID, GID, ZID, startdatum, enddatum)
           for BID, GID, ZID, startdatum, enddatum in anvil.server.call("get_booking")
       ]
       
+      
+      
       self.drop_down_3.items = [
           f"BuchungsID: {reservation[0]} - GästeID: {reservation[1]} - ZimmerID: {reservation[2]} - Anreise: {reservation[3]} - Abreise: {reservation[4]}"
           for reservation in self.bookings
       ]
+
+      #da soll jetzt die Buchungen mit allen hin
       
-      
+      self.bookingswithother = [
+          (BMID,BID,GID)
+          for BMID, BID, GID in anvil.server.call("get_bookingwithguest")
+      ]
+      self.drop_down_4.items = [f"BuchunngsmitgästeID: {buchung[0]} BuchungsID: {buchung[1]} - Gast: {buchung[2]}" for buchung in self.bookingswithother]
       
       
               
@@ -160,6 +178,23 @@ class Startseite(StartseiteTemplate):
 
     def button_2_click(self, **event_args):
       """This method is called when the button is clicked."""
-      for i in self.user:
-        if selected_value == f"Gast {i[0]} - Preiskategorie: {i[1]}":  
-            PID = i[1]
+      selectedroom = self.dropdownzimmer.selected_value
+      selected_guest = self.drop_down_gastliste.selected_value
+      for y in self.rooms:  
+          if (selectedroom == f"Zimmernummer: {y[0]} - Bettenanzahl: {y[1]} - Preis p. Nacht = {y[2]} - Gebucht: {y[3]}"):
+            self.bettenzahl = y[1]
+            print(self.counterguests)
+      if (self.counterguests < self.bettenzahl):
+        self.counterguests+=1
+        self.selectedguestlist.append(selected_guest)
+        
+      
+      print(selected_guest)
+      print(self.selectedguestlist)
+            
+      self.drop_down_addedguests.items = self.selectedguestlist
+      
+      
+      
+      
+      

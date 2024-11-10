@@ -57,7 +57,8 @@ components:
     name: drop_down_gastliste
     properties: {}
     type: DropDown
-  - layout_properties: {grid_position: 'EKDJUP,WQJILI BJSKMN,JUGMUC'}
+  - event_bindings: {click: button_2_click}
+    layout_properties: {grid_position: 'EKDJUP,WQJILI BJSKMN,JUGMUC'}
     name: button_2
     properties: {text: Gast Hinzufügen}
     type: Button
@@ -74,13 +75,21 @@ components:
     name: button_1
     properties: {text: Buchen}
     type: Button
+  - layout_properties: {grid_position: 'EKDJUP,WQJILI DNLOIY,MYAIIX'}
+    name: label_6
+    properties: {text: 'Buchungen:'}
+    type: Label
   - layout_properties: {grid_position: 'EKDJUP,WQJILI DNLOIY,NFCBMK'}
     name: drop_down_3
     properties: {}
     type: DropDown
+  - layout_properties: {grid_position: 'FNZNIV,MAHBLQ'}
+    name: drop_down_4
+    properties: {}
+    type: DropDown
   layout_properties: {slot: default}
   name: content_panel
-  properties: {col_widths: '{"ZKFOQM":5,"FBSHDK":55,"YIMHOD":10,"YHNMCZ":50,"AMUODR":10,"GHPZPF":20,"XEEDJB":10,"WQJILI":50,"XHWUZQ":50,"HPXNKT":15,"MBILGS":45,"IOLRUM":10,"YVBYAI":50}'}
+  properties: {col_widths: '{"ZKFOQM":5,"FBSHDK":55,"YIMHOD":10,"YHNMCZ":50,"AMUODR":10,"GHPZPF":20,"XEEDJB":10,"WQJILI":50,"XHWUZQ":50,"HPXNKT":15,"MBILGS":45,"IOLRUM":10,"YVBYAI":50,"MYAIIX":10,"NFCBMK":50}'}
   type: ColumnPanel
 - layout_properties: {slot: nav-right}
   name: navbar_links
