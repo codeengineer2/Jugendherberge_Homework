@@ -51,7 +51,7 @@ components:
     type: Spacer
   - layout_properties: {grid_position: 'EKDJUP,WQJILI EOZVBO,IOLRUM'}
     name: label_4
-    properties: {text: Gäste}
+    properties: {text: Gast}
     type: Label
   - layout_properties: {grid_position: 'EKDJUP,WQJILI EOZVBO,YVBYAI'}
     name: drop_down_gastliste
@@ -83,13 +83,17 @@ components:
     name: drop_down_3
     properties: {}
     type: DropDown
+  - layout_properties: {grid_position: 'FNZNIV,NOEPBE'}
+    name: label_7
+    properties: {text: 'BuchungenmitGästen:'}
+    type: Label
   - layout_properties: {grid_position: 'FNZNIV,MAHBLQ'}
     name: drop_down_4
     properties: {}
     type: DropDown
   layout_properties: {slot: default}
   name: content_panel
-  properties: {col_widths: '{"ZKFOQM":5,"FBSHDK":55,"YIMHOD":10,"YHNMCZ":50,"AMUODR":10,"GHPZPF":20,"XEEDJB":10,"WQJILI":50,"XHWUZQ":50,"HPXNKT":15,"MBILGS":45,"IOLRUM":10,"YVBYAI":50,"MYAIIX":10,"NFCBMK":50}'}
+  properties: {col_widths: '{"ZKFOQM":5,"FBSHDK":55,"YIMHOD":10,"YHNMCZ":50,"AMUODR":10,"GHPZPF":20,"XEEDJB":10,"WQJILI":50,"XHWUZQ":50,"HPXNKT":15,"MBILGS":45,"IOLRUM":10,"YVBYAI":50,"MYAIIX":10,"NFCBMK":50,"NOEPBE":20,"MAHBLQ":40}'}
   type: ColumnPanel
 - layout_properties: {slot: nav-right}
   name: navbar_links

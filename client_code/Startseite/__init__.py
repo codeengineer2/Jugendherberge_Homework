@@ -58,7 +58,7 @@ class Startseite(StartseiteTemplate):
       
         self.selected_jugendherberge = self.drop_down_1.selected_value
         print("Selected Jugendherberge JID:", self.selected_jugendherberge)
-      
+        
     def drop_down_2_change(self, **event_args):
         """This method is called when an item is selected in drop_down_2"""
         
@@ -148,8 +148,11 @@ class Startseite(StartseiteTemplate):
           (BMID,BID,GID)
           for BMID, BID, GID in anvil.server.call("get_bookingwithguest")
       ]
-      self.drop_down_4.items = [f"BuchunngsmitgästeID: {buchung[0]} BuchungsID: {buchung[1]} - Gast: {buchung[2]}" for buchung in self.bookingswithother]
-      
+      self.drop_down_4.items = [f"BuchunngsmitgästeID: {buchung[0]} - BuchungsID: {buchung[1]} - Gast: {buchung[2]}" for buchung in self.bookingswithother]
+      self.selectedguestlist = []
+      self.counterguests = 0
+
+      self.drop_down_addedguests.items = []
       
               
               
@@ -184,7 +187,7 @@ class Startseite(StartseiteTemplate):
           if (selectedroom == f"Zimmernummer: {y[0]} - Bettenanzahl: {y[1]} - Preis p. Nacht = {y[2]} - Gebucht: {y[3]}"):
             self.bettenzahl = y[1]
             print(self.counterguests)
-      if (self.counterguests < self.bettenzahl):
+      if (self.counterguests+1 < self.bettenzahl):
         self.counterguests+=1
         self.selectedguestlist.append(selected_guest)
         

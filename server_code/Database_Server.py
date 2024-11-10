@@ -13,7 +13,7 @@ import sqlite3
 # them with @anvil.server.callable.
 # Here is an example - you can replace it with your own:
 #
-counterguestadd = 0
+
 
 @anvil.server.callable
 def say_hello(name):
@@ -89,9 +89,15 @@ def write_bookingothers(guestlistdatas):
     cursor = conn.cursor()
     
     try:
-        counterguestadd += 1  # Increment the global counterguestadd variable
+        res = cursor.execute("SELECT MAX(BID) FROM bucht").fetchone()
+        if res is not None and res[0] is not None:
+          res = int(res[0])
+        else:
+          res = 0
+        print(res)
         for i in guestlistdatas:
-          cursor.execute("INSERT INTO buchmit (BID, GID) VALUES (?, ?)", (counterguestadd, i))
+          
+          cursor.execute("INSERT INTO buchmit (BID, GID) VALUES (?, ?)", (res, i))
         
         conn.commit()
         print("Insertion successful")
