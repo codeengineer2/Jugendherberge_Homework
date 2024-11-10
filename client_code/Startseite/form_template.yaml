@@ -49,16 +49,24 @@ components:
     name: spacer_2
     properties: {height: 32}
     type: Spacer
+  - layout_properties: {grid_position: 'EKDJUP,WQJILI EOZVBO,IOLRUM'}
+    name: label_4
+    properties: {text: Gäste}
+    type: Label
   - layout_properties: {grid_position: 'EKDJUP,WQJILI EOZVBO,YVBYAI'}
-    name: drop_down_gast1
+    name: drop_down_gastliste
     properties: {}
     type: DropDown
+  - layout_properties: {grid_position: 'EKDJUP,WQJILI BJSKMN,JUGMUC'}
+    name: button_2
+    properties: {text: Gast Hinzufügen}
+    type: Button
+  - layout_properties: {grid_position: 'EKDJUP,WQJILI EOPOTF,DPXDME'}
+    name: label_5
+    properties: {text: Hinzugefügte Gäste}
+    type: Label
   - layout_properties: {grid_position: 'EKDJUP,WQJILI EOPOTF,QFEJTD'}
-    name: drop_down_gast2
-    properties: {}
-    type: DropDown
-  - layout_properties: {grid_position: 'EKDJUP,WQJILI JQOORH,TVHHDQ'}
-    name: drop_down_gast3
+    name: drop_down_addedguests
     properties: {}
     type: DropDown
   - event_bindings: {click: button_1_click}
@@ -72,7 +80,7 @@ components:
     type: DropDown
   layout_properties: {slot: default}
   name: content_panel
-  properties: {col_widths: '{"ZKFOQM":5,"FBSHDK":55,"YIMHOD":10,"YHNMCZ":50,"AMUODR":10,"GHPZPF":20,"XEEDJB":10,"WQJILI":50,"XHWUZQ":50,"HPXNKT":15,"MBILGS":45}'}
+  properties: {col_widths: '{"ZKFOQM":5,"FBSHDK":55,"YIMHOD":10,"YHNMCZ":50,"AMUODR":10,"GHPZPF":20,"XEEDJB":10,"WQJILI":50,"XHWUZQ":50,"HPXNKT":15,"MBILGS":45,"IOLRUM":10,"YVBYAI":50}'}
   type: ColumnPanel
 - layout_properties: {slot: nav-right}
   name: navbar_links

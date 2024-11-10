@@ -158,7 +158,8 @@ class Startseite(StartseiteTemplate):
       if self.date_picker_end.date <= self.date_picker_start.date:
         self.date_picker_end.date = self.date_picker_start.date + datetime.timedelta(days=1)
 
-      
-
-    
-      
+    def button_2_click(self, **event_args):
+      """This method is called when the button is clicked."""
+      for i in self.user:
+        if selected_value == f"Gast {i[0]} - Preiskategorie: {i[1]}":  
+            PID = i[1]
