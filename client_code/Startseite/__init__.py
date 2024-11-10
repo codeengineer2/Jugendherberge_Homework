@@ -101,7 +101,7 @@ class Startseite(StartseiteTemplate):
           if selected_value_zimmer == f"Zimmernummer: {y[0]} - Bettenanzahl: {y[1]} - Preis p. Nacht = {y[2]} - Gebucht: {y[3]}":
               zimmerid = str(y[0])
               
-  
+      
       selected_datestart = self.date_picker_start.date
       selected_dateend = self.date_picker_end.date
       
@@ -129,6 +129,9 @@ class Startseite(StartseiteTemplate):
           f"BuchungsID: {reservation[0]} - GästeID: {reservation[1]} - ZimmerID: {reservation[2]} - Anreise: {reservation[3]} - Abreise: {reservation[4]}"
           for reservation in self.bookings
       ]
+      
+      
+      
       
               
               

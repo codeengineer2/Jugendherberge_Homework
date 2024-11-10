@@ -62,6 +62,7 @@ def write_booking(daten_liste):
     
     try:
         cursor.execute("INSERT INTO bucht (GID, ZID, startdatum, enddatum) VALUES (?, ?, ?, ?)", (GID, ZID, startdatum, enddatum))
+        cursor.execute(f"UPDATE zimmer SET gebucht=1 WHERE zimmernummer = {ZID}")
         conn.commit()
         print("Insertion successful")
     except Exception as e:
@@ -77,5 +78,7 @@ def get_booking(row="x"):
     conn.close()
     print("Booking data retrieved:", res)
     return res
+
+
   
   
